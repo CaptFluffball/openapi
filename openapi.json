@@ -1,0 +1,127 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Simple Ref Data API",
+    "description": "Will handle ref data stuff - this is a longer description. </br></br>Note the use of html tags in this text to help readability.</br> Things like <b>bold</b> and <i>italic</i> and <u>underline</u>.",
+    "termsOfService": "https://github.com/CaptFluffball/openapi/README.md",
+    "contact": {
+      "name": "Captain Fluffball",
+      "url": "https://github.com/CaptFluffball/openapi/README.md",
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://github.com/CaptFluffball/openapi",
+      "description": "I have no idea what should go in here"
+    }
+  ],
+  "paths": {
+    "/airports":{
+      "get":{
+        "tags":[
+          "location data"
+        ],
+        "summary": "Retrieves airports",
+        "description": "This operation will retrieve all of the airports that we know and care about - can be limited by the country te airport is based in",
+        "operationId": "retrieveAllAirports",
+        "parameters": [
+          {
+            "name": "countryCode",
+            "in": "query",
+            "description": "Adding this will limit the response to just airports in the specified country",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "countOfAirports": {
+                      "description": "The number of airports that have been returned",
+                      "type": "number"
+                    },
+                    "airports": {
+                      "description": "The airports",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "The IATA code for the airport"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "The name of the airport - for display purposes"
+                          }
+                        },
+                        "required": ["code"]
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "1 returned": {
+                    "$ref": "one_airport.json"
+                  },
+                  "2 returned": {
+                    "summary": "Two returned airports",
+                    "description": "What a response would look like with <b><u>TWO</b></u> returned airports",
+                    "value": {
+                      "countOfAirports": 2,
+                      "airports": [
+                        {
+                          "code": "LHR",
+                          "name": "Heathrow"
+                        },
+                        {
+                          "code": "NCL",
+                          "name": "Newcastle"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+  },
+  "security": [
+    {
+    }
+  ],
+  "tags": [
+    {
+      "name": "location data",
+      "description": "Location stuff will appear under this tag"
+    },
+    {
+      "name": "currency data",
+      "description": "Currency stuff will appear under this tag"
+    }
+  ],
+  "externalDocs": {
+    "description": "This is external documentation about the entire API",
+    "url": "https://github.com/CaptFluffball/openapi"
+  }
+}
